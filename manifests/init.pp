@@ -315,6 +315,10 @@
 #   Whether we should test new configuration files with `corosync -t`.
 #   (requires corosync 2.3.4)
 #
+# @param quorum_device_net_host
+#   Setting this configuration option to the ipaddress or hostname of a host
+#   running corosync-qnetd enables the use of this host as additional quorum
+#
 # @example Simple configuration without secauth
 #
 #  class { 'corosync':
@@ -400,6 +404,7 @@ class corosync (
   Optional[Enum['yes', 'no']] $clear_node_high_bit                   = undef,
   Optional[Integer] $max_messages                                    = undef,
   Boolean $test_corosync_config                                      = $corosync::params::test_corosync_config,
+  Optional[String] $quorum_device_net_host                           = undef,
 ) inherits corosync::params {
   if $set_votequorum and (empty($quorum_members) and empty($multicast_address) and !$cluster_name) {
     fail('set_votequorum is true, so you must set either quorum_members, or one of multicast_address or cluster_name.')

@@ -127,6 +127,15 @@ quorum {
 <% if @votequorum_expected_votes.to_i == 2 && !@manage_quorum_device -%>
   two_node: 1
 <% end -%>
+<% elsif @quorum_device_net_host -%>
+  device {
+    votes: 1
+    model: net
+    net {
+      tls: off
+      host: <%= @quorum_device_net_host %>
+    }
+  }
 <% elsif Array(@quorum_members).count == 2 && !@manage_quorum_device -%>
   two_node: 1
 <% end -%>
